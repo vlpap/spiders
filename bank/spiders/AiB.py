@@ -5,7 +5,14 @@ import scrapy
 
 class Liquidations(scrapy.Spider):
 	name = "liquidations"
-	start_urls = ['https://roi.aib.gov.uk/roi/Liquidations/Liquidation/Details/1']
+	start_urls = ['https://roi.aib.gov.uk/roi/Receiverships/Receivership/Details/1']
+	base_url = 'https://roi.aib.gov.uk/roi/Receiverships/Receivership/Details/'
+	
+	def crawlingOfLinks(self, response):
+		for link in range(1,3):
+			absolute_url = self.base_url + str(link)
+			yield scrapy.Request(absolute_url, callback=self.parse)
+		
 
 	def parse(self, response):
 		res = defaultdict(dict)
@@ -16,8 +23,7 @@ class Liquidations(scrapy.Spider):
 		
 		tableHeader = response.xpath('//h3/text()').extract()
 		res[tableHeader.pop()].update(table)
-		table.clear()
-		
+				
 		for fieldset in response.xpath('//fieldset [position() > 1]'):
 			tableHeader += fieldset.xpath('.//legend/text()').extract()
 			th = fieldset.xpath('.//div//th/text()').extract()
