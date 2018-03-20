@@ -1,12 +1,10 @@
 import scrapy
 from collections import defaultdict
-from urllib.parse import urlsplit, urlunsplit
 
 class Liquidations(scrapy.Spider):
 	name = "liquidations"
 	start_urls = ['https://roi.aib.gov.uk/roi/Receiverships/Receivership/Details/1']
-	base_url = 'https://roi.aib.gov.uk/roi/Receiverships/Receivership/Details/'
-		
+			
 	def parse(self, response):
 		res = defaultdict(list)
         	
@@ -32,5 +30,6 @@ class Liquidations(scrapy.Spider):
 		
 		urlSplit = str.rsplit(response.request.url, '/', 1)
 		urlSplit[1] = str(int(urlSplit[1]) + 1)
+		
 		yield scrapy.Request("/".join(urlSplit)) 
 		
