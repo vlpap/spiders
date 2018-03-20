@@ -1,4 +1,3 @@
-from pyspider.libs.base_handler import *
 from collections import OrderedDict
 import scrapy
 
