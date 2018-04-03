@@ -3,7 +3,7 @@ from collections import defaultdict
 
 class Liquidations(scrapy.Spider):
 	name = "liquidations"
-	start_urls = ['https://roi.aib.gov.uk/roi/Receiverships/Receivership/Details/1']
+	start_urls = ['https://roi.aib.gov.uk/roi/Receiverships/Receivership/Details/1', 'https://roi.aib.gov.uk/roi/Insolvency/Insolvency/Details/1']
 			
 	def parse(self, response):
 		res = defaultdict(list)
